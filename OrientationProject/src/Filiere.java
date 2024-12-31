@@ -3,7 +3,7 @@ import java.util.List;
 
 import Exceptions.matiereExistantException;
 
-public class Filiere {
+public class Filiere implements Comparable{
 	
 	String nom; 
 	int duree;
@@ -77,6 +77,20 @@ public class Filiere {
 			
 		}
 	return false;
+	}
+
+	
+	
+
+	@Override
+	public int compareTo(Object o) {
+		if(this.CE.classementMinEc + this.CE.classementMinMp + this.CE.classementMinPsi + this.CE.classementMinTsi + (20-this.CE.noteMinPara) < ((Filiere)o).CE.classementMinEc + ((Filiere)o).CE.classementMinMp + ((Filiere)o).CE.classementMinPsi + ((Filiere)o).CE.classementMinTsi + (20-((Filiere)o).CE.noteMinPara)) {
+			return 1;
+		}
+		else if(this.CE.classementMinEc + this.CE.classementMinMp + this.CE.classementMinPsi + this.CE.classementMinTsi + (20-this.CE.noteMinPara) > ((Filiere)o).CE.classementMinEc + ((Filiere)o).CE.classementMinMp + ((Filiere)o).CE.classementMinPsi + ((Filiere)o).CE.classementMinTsi + (20-((Filiere)o).CE.noteMinPara)) {
+			return -1;
+		}
+		return 0;
 	}
 
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Exceptions.filiereExistantException;
@@ -63,6 +64,12 @@ public abstract class Institution implements Evaluate {
 			return "ne peut rien acceder";
 		}
 		return r;
+	}
+	
+	public void sortFilieres() {
+		
+		Collections.sort(this.filieres);	
+		
 	}
 	
 

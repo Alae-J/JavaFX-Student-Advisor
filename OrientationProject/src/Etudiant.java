@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.domaineExistantException;
 import Exceptions.filiereExistantException;
 
 public abstract class Etudiant  {
@@ -39,12 +40,12 @@ public abstract class Etudiant  {
 	abstract public String institutionPermis(List<Institution> L);
 	
 	public void ajouterFilierePreferees(Filiere filiere) throws filiereExistantException{
-		if (this.filieresPreferees.contains(filiere)) throw new domainExistantException("filiere deja existe!");
+		if (this.filieresPreferees.contains(filiere)) throw new filiereExistantException("filiere deja existe!");
 		this.filieresPreferees.add(filiere);
 		
 	}
 	public void ajouterDomainesPreferees(Domaine domaine) throws domaineExistantException {
-		if (this.domainesPreferees.contains(domaine)) throw new domainExistantException("domaine deja existe!");
+		if (this.domainesPreferees.contains(domaine)) throw new domaineExistantException("domaine deja existe!");
 		this.domainesPreferees.add(domaine);
 	}
 	
