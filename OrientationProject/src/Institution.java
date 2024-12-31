@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.filiereExistantException;
 import Exceptions.matiereExistantException;
 
 public abstract class Institution implements Evaluate {
@@ -25,22 +26,22 @@ public abstract class Institution implements Evaluate {
 		this.filieres.add(filiere);
 	}	
 		
-	public String PeutAcceder(Etudiant E) {
-		String r = "";
-			
-		for(int i=0;i<this.filieres.size();i++) {
-				
-			if (this.filieres.get(i).PeutAccederFiliere(E)==true) {
-					
-				r = r +" "+this.filieres.get(i).nom;
-					
-			}
-		}
-		if(r.trim().isEmpty()){
-			System.out.println("ne peut pas acceder");
-		}
-		return r;
-	}
+//	public String PeutAcceder(Etudiant E) {
+//		String r = "";
+//			
+//		for(int i=0;i<this.filieres.size();i++) {
+//				
+//			if (this.filieres.get(i).PeutAccederFiliere(E)==true) {
+//					
+//				r = r +" "+this.filieres.get(i).nom;
+//					
+//			}
+//		}
+//		if(r.trim().isEmpty()){
+//			System.out.println("ne peut pas acceder");
+//		}
+//		return r;
+//	}
 	
 	
 
