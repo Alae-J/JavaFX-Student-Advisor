@@ -61,7 +61,7 @@ public abstract class Institution implements Evaluate {
 			}
 		}
 		if(r.trim().isEmpty()){
-			return "ne peut rien acceder";
+			System.out.println("ne peut rien acceder");
 		}
 		return r;
 	}
@@ -70,6 +70,11 @@ public abstract class Institution implements Evaluate {
 		
 		Collections.sort(this.filieres);	
 		
+	}
+	
+	@Override 
+	public String toString() {
+		return "institution nom : "+this.nom+"ville : "+this.ville+"type : "+this.type+"capacite :"+this.capacite;
 	}
 	
 

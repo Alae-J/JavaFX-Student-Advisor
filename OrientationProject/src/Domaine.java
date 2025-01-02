@@ -19,7 +19,7 @@ public class Domaine implements Evaluate {
 			}
 		}
 		if(r.trim().isEmpty()){
-			return "ne peut rien acceder";
+			System.out.println("ne peut rien acceder");
 		}
 		
 		return r;

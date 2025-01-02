@@ -24,6 +24,11 @@ public  class ConditionEntree {
 		this.classementMinTsi = classementMinTsi;
 		this.classementMinEc = classementMinEc;
 	}
+	
+	@Override 
+	public String toString() {
+		return "age : "+this.ageMax+"note min parallele : "+this.noteMinPara +"classementunivMin : "+this.classementUnivMin+"classement min mp/psi/tsi/ec :"+this.classementMinMp+this.classementMinPsi+this.classementMinTsi+this.classementMinEc;
+	}
 
 }
 	

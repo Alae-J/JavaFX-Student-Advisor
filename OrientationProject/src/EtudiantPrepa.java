@@ -26,12 +26,23 @@ public class EtudiantPrepa extends Etudiant {
 				r = r + " "+L.get(i).nom;
 			}
 		}
-		if (r.trim().isEmpty()) return "Aucune Institution n'est Permise!";
+		if (r.trim().isEmpty()) System.out.println("Aucune Institution n'est Permise!");
 		return "les ecoles permis sont :" + r;
 	}
 
+	@Override 
+	public String toString() {
+		return "nom :"+this.nom+"prenom : "+this.prenom+"filiere Prepa :"+this.filierePrepa + "Classement :"+this.classement;
+	}
 
-
+	
+	
+	
+	
+	
+	
+	
+	//getters setters
 
 
 	public String getFilierePrepa() {
