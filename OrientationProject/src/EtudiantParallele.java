@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.List;
 
-public class EtudiantParallele extends Etudiant {
+public class EtudiantParallele extends Etudiant implements Serializable {
 
 
 	private int classementDansUniversitee;

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class ConditionEntree {
+public  class ConditionEntree implements Serializable {
 	
 	int ageMax = 0;
 	
@@ -27,7 +28,7 @@ public  class ConditionEntree {
 	
 	@Override 
 	public String toString() {
-		return "age : "+this.ageMax+"note min parallele : "+this.noteMinPara +"classementunivMin : "+this.classementUnivMin+"classement min mp/psi/tsi/ec :"+this.classementMinMp+this.classementMinPsi+this.classementMinTsi+this.classementMinEc;
+		return " age : "+this.ageMax+"\n note min parallele : "+this.noteMinPara +"\n classementunivMin : "+this.classementUnivMin+"\n classement min mp/psi/tsi/ec :"+this.classementMinMp+" "+this.classementMinPsi+" "+this.classementMinTsi+" "+this.classementMinEc;
 	}
 
 }

@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import Exceptions.matiereExistantException;
 
-public class Filiere implements Comparable{
+public class Filiere implements Comparable,Serializable{
 	
 	String nom; 
 	int duree;
@@ -91,6 +92,11 @@ public class Filiere implements Comparable{
 			return -1;
 		}
 		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		return "nom :"+this.nom + "  duree : "+this.duree+"  Conditions : \n"+this.CE;
 	}
 
 

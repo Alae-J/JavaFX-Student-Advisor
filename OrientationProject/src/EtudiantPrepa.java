@@ -1,6 +1,7 @@
- import java.util.List;
+ import java.io.Serializable;
+import java.util.List;
 
-public class EtudiantPrepa extends Etudiant {
+public class EtudiantPrepa extends Etudiant implements Serializable {
 	private String filierePrepa; //mp/psi/tsi/ecs
 	private int classement ;
 	
@@ -26,7 +27,7 @@ public class EtudiantPrepa extends Etudiant {
 				r = r + " "+L.get(i).nom;
 			}
 		}
-		if (r.trim().isEmpty()) System.out.println("Aucune Institution n'est Permise!");
+		if (r=="") { System.out.println("Aucune Institution n'est Permise!");}
 		return "les ecoles permis sont :" + r;
 	}
 

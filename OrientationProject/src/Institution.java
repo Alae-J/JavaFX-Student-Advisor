@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -5,7 +6,7 @@ import java.util.List;
 import Exceptions.filiereExistantException;
 import Exceptions.matiereExistantException;
 
-public abstract class Institution implements Evaluate {
+public abstract class Institution implements Evaluate,Serializable {
 	String nom;
 	String ville;
 	String type ; //Ecole ou Universite 
@@ -59,9 +60,6 @@ public abstract class Institution implements Evaluate {
 				r = r +" "+this.filieres.get(i).nom;
 				
 			}
-		}
-		if(r.trim().isEmpty()){
-			System.out.println("ne peut rien acceder");
 		}
 		return r;
 	}

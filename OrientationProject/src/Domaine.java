@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Domaine implements Evaluate {
+public class Domaine implements Evaluate,Serializable {
 	String nom;
 	String dscriptionDomaine ;
 	List<Filiere> filieres = new ArrayList<Filiere>();
