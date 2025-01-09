@@ -16,15 +16,27 @@ public class EtudiantParallele extends Etudiant {
 	
 	@Override
 	public String institutionPermis(List<Institution> L) {
-		String r = "";
-		for (int i = 0; i <L.size(); i++) {
-			if(L.get(i).PeutAcceder(this) != ""){
-				
-				r = r + " "+L.get(i).nom;
-			}
-			
-		}
-		return "les ecoles permis sont :" + r;
+	    String r = "";
+	    // Conversion temporaire en liste triée par nom
+	    List<Institution> institutionsTriees = new ArrayList<>(L);
+	    Collections.sort(institutionsTriees, new Comparator<Institution>() {
+	    	@Override
+	    	public int compare (Institution I1, Institusion I2	 ) {
+	    		return I1.nom.compareTo(I2.nom);
+	    	}
+	    });
+
+	    for (Institution institution : institutionsTriees) {
+	        if (!institution.PeutAcceder(this).isEmpty()) {
+	            r += " " + institution.nom;
+	        }
+	    }
+
+	    if (r.trim().isEmpty()) {
+	        return "Aucune Institution n'est Permise!";
+	    }
+
+	    return "les ecoles permises sont :" + r;
 	}
 
 
@@ -37,7 +49,8 @@ public class EtudiantParallele extends Etudiant {
 
 
 
-	public void setNoteDiplome(float noteDiplome) {
+	public void setNoteDiplome(float noteDiplome) throws NoteException {
+		if (noteDiplome < 0 || noteDiplome > 20) throw new NoteException("La note doit être entre 0 et 20!");
 		this.noteDiplome = noteDiplome;
 	}
 
@@ -65,10 +78,10 @@ public class EtudiantParallele extends Etudiant {
 
 
 
-	public void setNoteSemestre(float noteSemestre[]) {
+	public void setNoteSemestre(float noteSemestre[]) throws NoteException {
+		for (noteSemestree: noteSemestre)
+			if (noteSemestree < 0 || noteSemestree > 20) throw new NoteException("Les note doivent être entre 0 et 20!");
 		this.noteSemestre = noteSemestre;
-		
-		
 		
 	}
 
@@ -82,7 +95,8 @@ public class EtudiantParallele extends Etudiant {
 
 
 
-	public void setClassementDansUniversitee(int classementDansUniversitee) {
+	public void setClassementDansUniversitee(int classementDansUniversitee) throws ClassementNegatifException {
+		if (classementDansUniversitee <= 0) throw new ClassementNegatifException ("Le classement doit être un entier positif.");
 		this.classementDansUniversitee = classementDansUniversitee;
 	}
 

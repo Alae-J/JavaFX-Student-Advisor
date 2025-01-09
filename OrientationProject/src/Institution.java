@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 import Exceptions.matiereExistantException;
+
 
 public abstract class Institution implements Evaluate {
 	String nom;
@@ -25,21 +27,29 @@ public abstract class Institution implements Evaluate {
 		this.filieres.add(filiere);
 	}	
 		
-	public String PeutAcceder(Etudiant E) {
-		String r = "";
-			
-		for(int i=0;i<this.filieres.size();i++) {
-				
-			if (this.filieres.get(i).PeutAccederFiliere(E)==true) {
-					
-				r = r +" "+this.filieres.get(i).nom;
-					
-			}
-		}
-		if(r.trim().isEmpty()){
-			System.out.println("ne peut pas acceder");
-		}
-		return r;
+	@Override
+	public String institutionPermis(List<Institution> L) {
+	    String r = "";
+	    // Conversion temporaire en liste triée par nom
+	    List<Institution> institutionsTriees = new ArrayList<>(L);
+	    Collections.sort(institutionsTriees, new Comparator<Institution>() {
+	    	@Override
+	    	public int compare (Institution I1, Institusion I2	 ) {
+	    		return I1.nom.compareTo(I2.nom);
+	    	}
+	    });
+
+	    for (Institution institution : institutionsTriees) {
+	        if (!institution.PeutAcceder(this).isEmpty()) {
+	            r += " " + institution.nom;
+	        }
+	    }
+
+	    if (r.trim().isEmpty()) {
+	        return "Aucune Institution n'est Permise!";
+	    }
+
+	    return "les ecoles permises sont :" + r;
 	}
 	
 	
@@ -48,20 +58,28 @@ public abstract class Institution implements Evaluate {
 	//verifier si un etudiant peut acceder a l'institut
 	
 	public String PeutAcceder(Etudiant E) {
-		String r = "";
-		
-		for(int i=0;i<this.filieres.size();i++) {
-			
-			if (this.filieres.get(i).PeutAccederFiliere(E)==true) {
-				
-				r = r +" "+this.filieres.get(i).nom;
-				
-			}
-		}
-		if(r.trim().isEmpty()){
-			return "ne peut rien acceder";
-		}
-		return r;
+	    String r = "";
+
+	    // Conversion temporaire en liste triée par nom
+	    List<Filiere> filieresTriees = new ArrayList<>(this.filieres);
+	    Collections.sort(filieresTriees, new Comparator<Filiere>() {
+	        @Override
+	        public int compare(Filiere f1, Filiere f2) {
+	            return f1.nom.compareTo(f2.nom);
+	        }
+	    });
+
+	    for (Filiere filiere : filieresTriees) {
+	        if (filiere.PeutAccederFiliere(E)) {
+	            r += " " + filiere.nom;
+	        }
+	    }
+
+	    if (r.trim().isEmpty()) {
+	        return "ne peut rien acceder";
+	    }
+
+	    return r;
 	}
 	
 

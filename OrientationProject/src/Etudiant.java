@@ -12,7 +12,7 @@ public abstract class Etudiant  {
 	String niveauEtude ; //bac+2 ou bac+3
 	String nomInstitutionActuel;
 	String TypeDiplome;
-	List<Domaine> domainesPreferees = new ArrayList<Domaine>();
+	HashSet<Domaine> domainesPreferees = new HashSet<>();
 	List<Filiere> filieresPreferees = new ArrayList<Filiere>();
 	int EtudiantID;
 	static int count = 0 ;
@@ -43,10 +43,12 @@ public abstract class Etudiant  {
 		this.filieresPreferees.add(filiere);
 		
 	}
-	public void ajouterDomainesPreferees(Domaine domaine) throws domaineExistantException {
-		if (this.domainesPreferees.contains(domaine)) throw new domainExistantException("domaine deja existe!");
-		this.domainesPreferees.add(domaine);
-	}
+	public void ajouterDomainesPreferees(Domaine domaine) {
+        if (!domainesPreferees.add(domaine)) {
+            // La méthode add retourne false si le domaine existe déjà
+            System.out.println("Le domaine existe déjà !");
+        }
+    }
 	
 	public String filieresPrefereesPermis() {
 		String r="";
@@ -68,5 +70,10 @@ public abstract class Etudiant  {
 		return r;
 	}
 	
-
+	public void setAge(int age) throws AgeNegatifException {
+	    if (age < 0) {
+	        throw new AgeNegatifException("L'âge ne peut pas être négatif.");
+	    }
+	    this.age = age;
+	}
 }
