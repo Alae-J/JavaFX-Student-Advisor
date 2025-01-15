@@ -1,5 +1,5 @@
 package DeletedClasses;
-public class Ecole  implements Description {
+public class Ecole extends Institution implements Description {
 	
 
 	private String TypeEcole; //ing , medcine / pharmacie ... 
