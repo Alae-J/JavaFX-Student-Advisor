@@ -72,7 +72,7 @@ public abstract class Institution implements Evaluate,Serializable {
 	
 	@Override 
 	public String toString() {
-		return "institution nom : "+this.nom+"ville : "+this.ville+"type : "+this.type+"capacite :"+this.capacite;
+		return " institution nom : "+this.nom+"\n ville : "+this.ville+"\n type : "+this.type+"\n capacite :"+this.capacite;
 	}
 	
 

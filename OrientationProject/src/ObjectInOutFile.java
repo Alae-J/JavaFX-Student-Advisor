@@ -14,6 +14,7 @@ public interface ObjectInOutFile {
 		
 		
 	}
+	
 	public static <T> T readObject(String fichier) throws Exception {
 		File f = new File(fichier);
 		ObjectInputStream in;
