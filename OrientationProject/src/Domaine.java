@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Domaine implements Evaluate {
+public class Domaine implements Evaluate,Serializable {
 	String nom;
 	String dscriptionDomaine ;
 	List<Filiere> filieres = new ArrayList<Filiere>();
@@ -19,7 +20,7 @@ public class Domaine implements Evaluate {
 			}
 		}
 		if(r.trim().isEmpty()){
-			return "ne peut rien acceder";
+			System.out.println("ne peut rien acceder");
 		}
 		
 		return r;

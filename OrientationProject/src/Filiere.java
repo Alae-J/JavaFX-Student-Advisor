@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import Exceptions.matiereExistantException;
 
-public class Filiere {
+public class Filiere implements Comparable,Serializable{
 	
 	String nom; 
 	int duree;
@@ -41,42 +42,79 @@ public class Filiere {
 	
 	
 	
-	public boolean PeutAccederFiliere(Etudiant E) {
-		if(E instanceof EtudiantParallele) {
-			if (((EtudiantParallele) E).getClassementDansUniversitee() <= this.CE.classementUnivMin 
-					&& ((EtudiantParallele) E).getNoteDiplome() >= this.CE.noteMinPara 
-					&& E.age <= this.CE.ageMax) {
-				return true;
-			}
-			return false;
-			
-			
-		}
-		if(E instanceof EtudiantPrepa) {
-			if ( ((EtudiantPrepa)E).getFilierePrepa() == "mp" && E.age <= this.CE.ageMax) {
-				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinMp;
-				
-			}
-			if ( ((EtudiantPrepa)E).getFilierePrepa() == "psi" && E.age <= this.CE.ageMax ) {
-				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinPsi;
+//	public boolean PeutAccederFiliere(Etudiant E) {
+//		if(E instanceof EtudiantParallele) {
+//			if (((EtudiantParallele) E).getClassementDansUniversitee() <= this.CE.classementUnivMin 
+//					&& ((EtudiantParallele) E).getNoteDiplome() >= this.CE.noteMinPara 
+//					&& E.age <= this.CE.ageMax) {
+//				return true;
+//			}
+//			return false;
+//			
+//			
+//		}
+//		if(E instanceof EtudiantPrepa) {
+//			if ( ((EtudiantPrepa)E).getFilierePrepa() == "mp" && E.age <= this.CE.ageMax) {
+//				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinMp;
+//				
+//			}
+//			if ( ((EtudiantPrepa)E).getFilierePrepa() == "psi" && E.age <= this.CE.ageMax ) {
+//				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinPsi;
+//
+//				
+//			}
+//			if ( ((EtudiantPrepa)E).getFilierePrepa() == "tsi" && E.age <= this.CE.ageMax) {
+//				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinTsi;
+//
+//	
+//			}
+//			if ( ((EtudiantPrepa)E).getFilierePrepa() == "ecs" && E.age <= this.CE.ageMax) {
+//				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinEc;
+//
+//	
+//			}
+//			return false;
+//			
+//			
+//		}
+//	return false;
+//	}
+	
+	public boolean PeutAccederFiliere(Etudiant etudiant) {
+	    List<VerificateurCriteres> verificateurs = new ArrayList<>();
+	    verificateurs.add(new VerificateurCriteresParallele());
+	    verificateurs.add(new VerificateurCriteresPrepa());
 
-				
-			}
-			if ( ((EtudiantPrepa)E).getFilierePrepa() == "tsi" && E.age <= this.CE.ageMax) {
-				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinTsi;
+	    for (VerificateurCriteres verificateur : verificateurs) {
+	        if (verificateur.valider(etudiant, this.CE)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	
+
 
 	
-			}
-			if ( ((EtudiantPrepa)E).getFilierePrepa() == "ecs" && E.age <= this.CE.ageMax) {
-				return ((EtudiantPrepa) E).getClassement() <= this.CE.classementMinEc;
-
 	
-			}
-			return false;
-			
-			
+
+	@Override
+	public int compareTo(Object o) {
+		if(this.CE.classementMinEc + this.CE.classementMinMp + this.CE.classementMinPsi + this.CE.classementMinTsi + (20-this.CE.noteMinPara) < ((Filiere)o).CE.classementMinEc + ((Filiere)o).CE.classementMinMp + ((Filiere)o).CE.classementMinPsi + ((Filiere)o).CE.classementMinTsi + (20-((Filiere)o).CE.noteMinPara)) {
+			return 1;
 		}
-	return false;
+		else if(this.CE.classementMinEc + this.CE.classementMinMp + this.CE.classementMinPsi + this.CE.classementMinTsi + (20-this.CE.noteMinPara) > ((Filiere)o).CE.classementMinEc + ((Filiere)o).CE.classementMinMp + ((Filiere)o).CE.classementMinPsi + ((Filiere)o).CE.classementMinTsi + (20-((Filiere)o).CE.noteMinPara)) {
+			return -1;
+		}
+		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		
+		return " nom :"+this.nom + "  duree : "+this.duree+"  Conditions : \n"+this.CE;
+		
 	}
 
 

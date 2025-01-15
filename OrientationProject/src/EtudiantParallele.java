@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.List;
 
-public class EtudiantParallele extends Etudiant {
+public class EtudiantParallele extends Etudiant implements Serializable {
 
 
 	private int classementDansUniversitee;
@@ -27,8 +28,21 @@ public class EtudiantParallele extends Etudiant {
 		return "les ecoles permis sont :" + r;
 	}
 
+	@Override 
+	public String toString() {
+		return "nom :"+this.nom+"prenom : "+this.prenom+"filiere Universitee :"+this.filiereUniv + "Note :"+this.noteDiplome;
+	}
 
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//getters and setters
 
 	public float getNoteDiplome() {
 		return noteDiplome;
