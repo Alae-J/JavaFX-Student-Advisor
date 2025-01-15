@@ -96,7 +96,9 @@ public class Filiere implements Comparable,Serializable{
 	
 	@Override
 	public String toString() {
-		return "nom :"+this.nom + "  duree : "+this.duree+"  Conditions : \n"+this.CE;
+		
+		return " nom :"+this.nom + "  duree : "+this.duree+"  Conditions : \n"+this.CE;
+		
 	}
 
 
