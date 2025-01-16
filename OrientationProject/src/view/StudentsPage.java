@@ -222,7 +222,7 @@ public class StudentsPage extends Application {
         TextField ageField = new TextField();
         ageField.setPromptText("Âge");
         ComboBox<String> filiereComboBox = new ComboBox<>();
-        filiereComboBox.getItems().addAll("MP", "PSI", "TSI", "ECS");
+        filiereComboBox.getItems().addAll("mp", "psi", "tsi", "ecs");
         filiereComboBox.setPromptText("Filière Prépa");
         TextField classementField = new TextField();
         classementField.setPromptText("Classement");
