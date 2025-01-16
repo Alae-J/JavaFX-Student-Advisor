@@ -23,9 +23,18 @@ public class test implements ObjectInOutFile {
 	            // Établir la connexion
 	            Connection connection = DriverManager.getConnection(url, user, password);
 	            
-	            EtudiantParallele Epa = BD.loadUnEtudiantParallel("EE74825", connection);
+//	            EtudiantParallele Epa = BD.loadUnEtudiantParallel("EE74825", connection);
+//	            
+//	            System.out.println(Epa.getNoteSemestre()[0]);
 	            
-	            System.out.println(Epa.getNoteSemestre()[0]);
+	            ArrayList<Institution> L = new ArrayList<Institution>();
+	            L = BD.loadInstitutions(connection);
+	            
+	            
+	            for (Institution institution : L) {
+	            	System.out.println(L);
+					
+				}
 	            
 	            
 	        } catch (Exception e) {

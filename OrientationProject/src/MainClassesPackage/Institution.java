@@ -73,7 +73,12 @@ public class Institution implements Evaluate,Serializable {
 	
 	@Override 
 	public String toString() {
-		return " institution nom : "+this.nom+"\n ville : "+this.ville+"\n type : "+this.type+"\n capacite :"+this.capacite;
+		String r = new String();
+		for (Filiere filiere : this.filieres) {
+			r = r + filiere.toString();
+			
+		}
+		return " institution nom : "+this.nom+"\n ville : "+this.ville+"\n type : "+this.type+"\n capacite :"+this.capacite+"\n "+r;
 	}
 
 	public String getNom() {

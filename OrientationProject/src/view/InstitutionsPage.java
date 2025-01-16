@@ -85,7 +85,8 @@ public class InstitutionsPage extends Application {
         institutionsSectionTitle.setFont(Font.font("Arial", 20)); // Matching size to other section titles
 
         // List of institutions
-        ListView<String> institutionList = new ListView<>();
+        ListView<Institution> institutionList = new ListView<>();
+
         //cree une hashmap <nomInstitution,Institution>
         
         Map<String[], Institution> institutionMap = new HashMap<>();
@@ -110,29 +111,38 @@ public class InstitutionsPage extends Application {
 //		Collections.sort(institutions,c);
 		
         for (Institution institution : institutionsPermises) {
-            institutionList.getItems().add(institution.getNom() + " - " + institution.getVille());
-            String[] clef = { institution.getNom(), institution.getVille()};
-            institutionMap.put(clef, institution);
+            institutionList.getItems().add(institution); // Ajout direct de l'objet Institution
         }
 
         institutionList.setPrefHeight(200);
         institutionList.setPrefWidth(600);
-
-        // Institution detail pop-up
-        institutionList.setOnMouseClicked(event -> {
-            if (!institutionList.getSelectionModel().isEmpty()) {
-                String selectedInstitutionName = institutionList.getSelectionModel().getSelectedItem();
-                Institution selectedInstitution = institutionMap.get(selectedInstitutionName);
-
-                if (selectedInstitution != null) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Détails de l'Institution");
-                    alert.setHeaderText(selectedInstitution.getNom());
-                    alert.setContentText(selectedInstitution.toString());
-                    alert.showAndWait();
+        
+        institutionList.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(Institution institution, boolean empty) {
+                super.updateItem(institution, empty);
+                if (empty || institution == null) {
+                    setText(null);
+                } else {
+                    setText(institution.getNom() + " - " + institution.getVille());
                 }
             }
         });
+
+
+        // Institution detail pop-up
+        institutionList.setOnMouseClicked(event -> {
+            Institution selectedInstitution = institutionList.getSelectionModel().getSelectedItem();
+            
+            if (selectedInstitution != null) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Détails de l'Institution");
+                alert.setHeaderText(selectedInstitution.getNom());
+                alert.setContentText(selectedInstitution.toString());
+                alert.showAndWait();
+            }
+        });
+
 
         // Buttons container for navigation
         HBox buttonsContainer = new HBox(20);
