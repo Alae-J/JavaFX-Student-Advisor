@@ -1,3 +1,4 @@
+package MainClassesPackage;
 public class VerificateurCriteresParallele implements VerificateurCriteres {
 
     @Override

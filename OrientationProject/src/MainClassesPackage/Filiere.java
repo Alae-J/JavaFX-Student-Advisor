@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,12 +110,86 @@ public class Filiere implements Comparable,Serializable{
 		}
 		return 0;
 	}
-	
+
+
+
 	@Override
 	public String toString() {
 		
 		return " nom :"+this.nom + "  duree : "+this.duree+"  Conditions : \n"+this.CE;
 		
+	}
+
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+
+	public int getDuree() {
+		return duree;
+	}
+
+
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
+
+
+
+	public String getTypeDiplome() {
+		return typeDiplome;
+	}
+
+
+
+	public void setTypeDiplome(String typeDiplome) {
+		this.typeDiplome = typeDiplome;
+	}
+
+
+
+	public Domaine getDomaine() {
+		return domaine;
+	}
+
+
+
+	public void setDomaine(Domaine domaine) {
+		this.domaine = domaine;
+	}
+
+
+
+	public List<Matiere> getMatieres() {
+		return matieres;
+	}
+
+
+
+	public void setMatieres(List<Matiere> matieres) {
+		this.matieres = matieres;
+	}
+
+
+
+	public ConditionEntree getCE() {
+		return CE;
+	}
+
+
+
+	public void setCE(ConditionEntree cE) {
+		CE = cE;
 	}
 
 

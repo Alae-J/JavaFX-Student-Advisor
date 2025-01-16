@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,26 @@ public class Domaine implements Evaluate,Serializable {
 		}
 		
 		return r;
+	}
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+	public List<Filiere> getFilieres() {
+		return filieres;
+	}
+
+
+	public void setFilieres(List<Filiere> filieres) {
+		this.filieres = filieres;
 	}
 	
 	

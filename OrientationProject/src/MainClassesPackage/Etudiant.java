@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,6 @@ public abstract class Etudiant  {
 	int age;
 	String CNE;//code massar
 	String niveauEtude ; //bac+2 ou bac+3
-	String nomInstitutionActuel;
-	String TypeDiplome;
 	List<Domaine> domainesPreferees = new ArrayList<Domaine>();
 	List<Filiere> filieresPreferees = new ArrayList<Filiere>();
 	int EtudiantID;
@@ -26,13 +25,13 @@ public abstract class Etudiant  {
 		this.age = age;
 	}
 	
-	public Etudiant(String nom, String prenom,String CIN,String CNE,int age,String niveauEtude,String nomInstitutionActuel,String TypeDiplome) {
+	public Etudiant(String nom, String prenom,String CIN,String CNE,int age,String niveauEtude) {
 		
-		
+		this.nom = nom;
+		this.prenom = prenom;
+		this.CIN = CIN;
 		this.CNE=CNE;
 		this.niveauEtude =niveauEtude;
-		this.nomInstitutionActuel = nomInstitutionActuel;
-		this.TypeDiplome = TypeDiplome;
 		this.EtudiantID = ++count;
 		
 	}

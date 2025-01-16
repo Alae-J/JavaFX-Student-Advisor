@@ -1,3 +1,4 @@
+package MainClassesPackage;
 public class VerificateurCriteresPrepa implements VerificateurCriteres {
 
     @Override

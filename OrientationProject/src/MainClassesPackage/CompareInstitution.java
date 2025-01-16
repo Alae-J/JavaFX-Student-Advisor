@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.util.Comparator;
 
 public class CompareInstitution implements Comparator {

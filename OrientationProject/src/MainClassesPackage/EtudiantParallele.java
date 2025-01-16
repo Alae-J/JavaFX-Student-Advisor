@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class EtudiantParallele extends Etudiant implements Serializable {
 	
 	public EtudiantParallele(String nom, String prenom, String CIN, String CNE, int age, String niveauEtude,
 			String nomInstitutionActuel, String TypeDiplome) {
-		super(nom, prenom, CIN, CNE, age, niveauEtude, nomInstitutionActuel, TypeDiplome);
+		super(nom, prenom, CIN, CNE, age, niveauEtude);
 	}
 	
 	

@@ -1,3 +1,4 @@
+package MainClassesPackage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,6 +74,54 @@ public abstract class Institution implements Evaluate,Serializable {
 	@Override 
 	public String toString() {
 		return " institution nom : "+this.nom+"\n ville : "+this.ville+"\n type : "+this.type+"\n capacite :"+this.capacite;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public List<Filiere> getFilieres() {
+		return filieres;
+	}
+
+	public void setFilieres(List<Filiere> filieres) {
+		this.filieres = filieres;
+	}
+
+	public int getCapacite() {
+		return capacite;
+	}
+
+	public void setCapacite(int capacite) {
+		this.capacite = capacite;
+	}
+
+	public String getPriveeOuPublique() {
+		return priveeOuPublique;
+	}
+
+	public void setPriveeOuPublique(String priveeOuPublique) {
+		this.priveeOuPublique = priveeOuPublique;
 	}
 	
 
