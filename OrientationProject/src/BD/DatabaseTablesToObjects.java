@@ -188,7 +188,11 @@ public class DatabaseTablesToObjects {
 
     // Ajouter un étudiant parallèle
     public void addEtudiantParallele(Connection connection, EtudiantParallele etudiant) throws SQLException {
-        String query = "INSERT INTO ETUDIANPARALLELe (NOM, PRENOM, CIN, AGE, NIVEAUEtude, classementDansUniversitee, noteDiplome, filiereUniv) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    	String query = "INSERT INTO `orientation`.`etudianparallele` "
+                + "(`NOM`, `PRENOM`, `CIN`, `AGE`, `NIVEAUEtude`, "
+                + "`classementDansUniversitee`, `noteDiplome`, `filiereUniv`, "
+                + "`noteSemestre1`, `noteSemestre2`, `noteSemestre3`, `noteSemestre4`) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, etudiant.getNom());
@@ -199,6 +203,10 @@ public class DatabaseTablesToObjects {
             stmt.setInt(6, etudiant.getClassementDansUniversitee());
             stmt.setFloat(7, etudiant.getNoteDiplome());
             stmt.setString(8, etudiant.getFiliereUniv());
+            stmt.setFloat(9, etudiant.getNoteSemestre()[0]);
+            stmt.setFloat(10, etudiant.getNoteSemestre()[1]);
+            stmt.setFloat(11, etudiant.getNoteSemestre()[2]);
+            stmt.setFloat(12, etudiant.getNoteSemestre()[3]);
             stmt.executeUpdate();
         }
     }
@@ -255,6 +263,70 @@ public class DatabaseTablesToObjects {
             stmt.executeUpdate();
         }
     }
+    
+    public EtudiantParallele loadUnEtudiantParallel(String cin, Connection connection) throws SQLException {
+        String query = "SELECT * FROM `orientation`.`ETUDIANPARALLELe` WHERE CIN = ?";
+        EtudiantParallele etudiant = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, cin); // Set the CIN parameter
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String nom = rs.getString("NOM");
+                    String prenom = rs.getString("PRENOM");
+                    String cin1 = rs.getString("CIN");
+                    int age = rs.getInt("AGE");
+                    String niveauEtude = rs.getString("NIVEAUEtude");
+                    int classementDansUniversitee = rs.getInt("classementDansUniversitee");
+                    float noteDiplome = rs.getFloat("noteDiplome");
+                    String filiereUniv = rs.getString("filiereUniv");
+                    float[] notes = {
+                        rs.getFloat("noteSemestre1"),
+                        rs.getFloat("noteSemestre2"),
+                        rs.getFloat("noteSemestre3"),
+                        rs.getFloat("noteSemestre4")
+                    };
+
+                    etudiant = new EtudiantParallele(nom, prenom, cin1, age, niveauEtude);
+                    etudiant.setClassementDansUniversitee(classementDansUniversitee);
+                    etudiant.setNoteDiplome(noteDiplome);
+                    etudiant.setFiliereUniv(filiereUniv);
+                    etudiant.setNoteSemestre(notes);
+                }
+            }
+        }
+        return etudiant;
+    }
+
+    
+    public EtudiantPrepa loadUnEtudiantPrepa(String cin, Connection connection) throws SQLException {
+        String query = "SELECT * FROM `orientation`.`etudiantprepa` WHERE CIN = ?";
+        EtudiantPrepa etudiant = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, cin); // Set the CIN parameter
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String nom = rs.getString("NOM");
+                    String prenom = rs.getString("PRENOM");
+                    String cin1 = rs.getString("CIN");
+                    int age = rs.getInt("AGE");
+                    String niveauEtude = rs.getString("NIVEAUEtude");
+                    String filierePrepa = rs.getString("filierePrepa");
+                    int classement = rs.getInt("classement");
+
+                    etudiant = new EtudiantPrepa(nom, prenom, cin1, age, niveauEtude);
+                    etudiant.setFilierePrepa(filierePrepa);
+                    etudiant.setClassement(classement);
+                }
+            }
+        }
+        return etudiant;
+    }
+
+    
+    
+    	
 
 }
 

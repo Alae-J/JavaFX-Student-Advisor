@@ -19,6 +19,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +83,13 @@ public class Accueil extends Application {
 
 
         DatabaseTablesToObjects dataBase = new DatabaseTablesToObjects();
+        
+        
         List<Institution> institutions = dataBase.loadInstitutions(connection);
+        
+//        Comparator c = new CompareInstitution();
+//		Collections.sort(institutions,c);
+		
         for (Institution institution : institutions) {
             institutionList.getItems().add(institution.getNom());
             institutionMap.put(institution.getNom(), institution);

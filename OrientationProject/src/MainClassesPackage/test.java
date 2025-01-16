@@ -1,12 +1,36 @@
 package MainClassesPackage;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import BD.*;
 
 public class test implements ObjectInOutFile {
 
 	public static void main(String[] args) {
+		DatabaseTablesToObjects BD = new DatabaseTablesToObjects();
+		
+		 String url = "jdbc:mysql://localhost:3306/Orientation";
+	        String user = "root"; // Remplacez par votre nom d'utilisateur
+	        String password = "yassine124800";
+	        
+	        try {
+	            // Charger le driver JDBC
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+
+	            // Établir la connexion
+	            Connection connection = DriverManager.getConnection(url, user, password);
+	            
+	            EtudiantParallele Epa = BD.loadUnEtudiantParallel("EE74825", connection);
+	            
+	            System.out.println(Epa.getNoteSemestre()[0]);
+	            
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
 		
 		try {
             // Step 1: Create Institutions
@@ -30,7 +54,7 @@ public class test implements ObjectInOutFile {
             institution2.ajouterFIliere(filiere2);
 
             // Step 4: Create Etudiant and Preferences
-            EtudiantParallele etudiant1 = new EtudiantParallele("Ahmed", "Ben", "A123", 23, "Bac+3", "Université Hassan II", "Licence");
+            EtudiantParallele etudiant1 = new EtudiantParallele("Ahmed", "Ben", "A123", 23, "Bac+3");
             etudiant1.setClassementDansUniversitee(80);
             etudiant1.setNoteDiplome(16);
 
@@ -102,6 +126,11 @@ public class test implements ObjectInOutFile {
 		Collections.sort(L);
 			
 	}
+	
+	
+	
+	
+	
 		
 
 }
