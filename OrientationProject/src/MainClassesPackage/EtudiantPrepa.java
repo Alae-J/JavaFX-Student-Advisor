@@ -13,10 +13,9 @@ public class EtudiantPrepa extends Etudiant implements Serializable {
 	
 	
 	
-	public EtudiantPrepa(String nom, String prenom, String CIN, String CNE, int age, String niveauEtude,
-			String nomInstitutionActuel, String TypeDiplome) {
-		super(nom, prenom, CIN, CNE, age, niveauEtude);
-		// TODO Auto-generated constructor stub  
+	public EtudiantPrepa(String nom, String prenom, String CIN, int age, String niveauEtude) {
+		super(nom, prenom, CIN ,age, niveauEtude);
+		
 	}
 	
 	@Override

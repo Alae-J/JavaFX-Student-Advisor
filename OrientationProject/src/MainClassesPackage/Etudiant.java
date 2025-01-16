@@ -10,7 +10,6 @@ public abstract class Etudiant  {
 	String prenom;
 	String CIN;
 	int age;
-	String CNE;//code massar
 	String niveauEtude ; //bac+2 ou bac+3
 	List<Domaine> domainesPreferees = new ArrayList<Domaine>();
 	List<Filiere> filieresPreferees = new ArrayList<Filiere>();
@@ -25,12 +24,11 @@ public abstract class Etudiant  {
 		this.age = age;
 	}
 	
-	public Etudiant(String nom, String prenom,String CIN,String CNE,int age,String niveauEtude) {
+	public Etudiant(String nom, String prenom,String CIN,int age,String niveauEtude) {
 		
 		this.nom = nom;
 		this.prenom = prenom;
 		this.CIN = CIN;
-		this.CNE=CNE;
 		this.niveauEtude =niveauEtude;
 		this.EtudiantID = ++count;
 		
@@ -66,6 +64,62 @@ public abstract class Etudiant  {
 			}
 		}
 		return r;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getCIN() {
+		return CIN;
+	}
+
+	public void setCIN(String cIN) {
+		CIN = cIN;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getNiveauEtude() {
+		return niveauEtude;
+	}
+
+	public void setNiveauEtude(String niveauEtude) {
+		this.niveauEtude = niveauEtude;
+	}
+
+	public List<Domaine> getDomainesPreferees() {
+		return domainesPreferees;
+	}
+
+	public void setDomainesPreferees(List<Domaine> domainesPreferees) {
+		this.domainesPreferees = domainesPreferees;
+	}
+
+	public List<Filiere> getFilieresPreferees() {
+		return filieresPreferees;
+	}
+
+	public void setFilieresPreferees(List<Filiere> filieresPreferees) {
+		this.filieresPreferees = filieresPreferees;
 	}
 	
 	

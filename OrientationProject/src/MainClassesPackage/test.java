@@ -30,11 +30,11 @@ public class test implements ObjectInOutFile {
             institution2.ajouterFIliere(filiere2);
 
             // Step 4: Create Etudiant and Preferences
-            EtudiantParallele etudiant1 = new EtudiantParallele("Ahmed", "Ben", "A123", "CNE123", 23, "Bac+3", "Université Hassan II", "Licence");
+            EtudiantParallele etudiant1 = new EtudiantParallele("Ahmed", "Ben", "A123", 23, "Bac+3", "Université Hassan II", "Licence");
             etudiant1.setClassementDansUniversitee(80);
             etudiant1.setNoteDiplome(16);
 
-            EtudiantPrepa etudiant2 = new EtudiantPrepa("Sara", "El", "B456", "CNE456", 22, "Bac+2", "Prépa ENSA", "Classe Prépa");
+            EtudiantPrepa etudiant2 = new EtudiantPrepa("Sara", "El", "B456", 22, "Bac+2");
             etudiant2.setClassement(55);
             etudiant2.setFilierePrepa("mp");
 

@@ -10,9 +10,9 @@ public class EtudiantParallele extends Etudiant implements Serializable {
 	private String filiereUniv;
 	private float noteSemestre[] = new float[4]; // 4semestre 
 	
-	public EtudiantParallele(String nom, String prenom, String CIN, String CNE, int age, String niveauEtude,
+	public EtudiantParallele(String nom, String prenom, String CIN, int age, String niveauEtude,
 			String nomInstitutionActuel, String TypeDiplome) {
-		super(nom, prenom, CIN, CNE, age, niveauEtude);
+		super(nom, prenom, CIN,age, niveauEtude);
 	}
 	
 	

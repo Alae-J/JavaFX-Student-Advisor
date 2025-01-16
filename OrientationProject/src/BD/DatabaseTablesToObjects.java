@@ -5,53 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseTablesToObjects {
-    public static void main(String[] args) {
+	
         // URL et informations de connexion
-        String url = "jdbc:mysql://localhost:3306/Orientation";
-        String user = "root"; // Remplacez par votre nom d'utilisateur
-        String password = "yassine124800"; // Remplacez par votre mot de passe
 
-        try {
-            // Charger le driver JDBC
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Établir la connexion
-            Connection connection = DriverManager.getConnection(url, user, password);
-
-            // Charger les institutions
-            ArrayList<Institution> institutions = loadInstitutions(connection);
-
-            // Afficher les institutions et leurs détails
-            System.out.println("Les Institutions :");
-            for (Institution institution : institutions) {
-            	System.out.println("----------------------------");
-                System.out.println(institution);
-                System.out.println("   Les Filieres : ");
-                for(Filiere F:institution.getFilieres()) {
-                	System.out.println(F);
-                	System.out.println("     Les matieres :");
-                	for(Matiere M:F.getMatieres()) {
-                		System.out.println(M);
-                	}
-                }
-                System.out.println("----------------------------");
-            }
-
-            // Fermer la connexion
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        
-        
-        
-        
-        
-    }
+    
 
     // Charger les institutions
-    private static ArrayList<Institution> loadInstitutions(Connection connection) throws SQLException {
+    public  ArrayList<Institution> loadInstitutions(Connection connection) throws SQLException {
         ArrayList<Institution> institutions = new ArrayList<>();
         String query = "SELECT * FROM institution";
 
@@ -74,7 +34,7 @@ public class DatabaseTablesToObjects {
     }
 
     // Charger les filières pour une institution donnée
-    private static ArrayList<Filiere> loadFilieres(Connection connection, String institutionNom, String institutionVille) throws SQLException {
+    public  ArrayList<Filiere> loadFilieres(Connection connection, String institutionNom, String institutionVille) throws SQLException {
         ArrayList<Filiere> filieres = new ArrayList<>();
         String query = "SELECT * FROM Filiere WHERE nominstitution = ? AND villeinstitution = ?";
 
@@ -111,7 +71,7 @@ public class DatabaseTablesToObjects {
     }
 
     // Charger les conditions d'entrée pour une filière donnée
-    private static ConditionEntree loadConditions(Connection connection, String filiereNom, String institutionNom, String institutionVille) throws SQLException {
+    public ConditionEntree loadConditions(Connection connection, String filiereNom, String institutionNom, String institutionVille) throws SQLException {
         String query = "SELECT * FROM ConditionsDentrees WHERE filierenom = ? AND filierenominstitution = ? AND filierevilleinstitution = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, filiereNom);
@@ -136,7 +96,7 @@ public class DatabaseTablesToObjects {
     }
 
     // Charger les matières pour une filière donnée
-    private static ArrayList<Matiere> loadMatieres(Connection connection, String filiereNom, String institutionNom, String institutionVille) throws SQLException {
+    public  ArrayList<Matiere> loadMatieres(Connection connection, String filiereNom, String institutionNom, String institutionVille) throws SQLException {
         ArrayList<Matiere> matieres = new ArrayList<>();
         String query = "SELECT * FROM Matiere WHERE filierenom = ? AND filierenominstitution = ? AND filierevilleinstitution = ?";
 
