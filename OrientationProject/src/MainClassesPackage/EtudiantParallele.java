@@ -1,5 +1,6 @@
 package MainClassesPackage;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EtudiantParallele extends Etudiant implements Serializable {
@@ -26,6 +27,20 @@ public class EtudiantParallele extends Etudiant implements Serializable {
 			
 		}
 		return "les ecoles permis sont :" + r;
+	}
+	
+	
+	@Override
+	public List<Institution> institutionPermises(List<Institution> L) {
+		List<Institution> institutions = new ArrayList<>();
+		for (int i = 0; i <L.size(); i++) {
+			if(L.get(i).PeutAcceder(this) != ""){
+				
+				institutions.add(L.get(i));
+			}
+		}
+		
+		return institutions;
 	}
 
 	@Override 

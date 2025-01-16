@@ -172,19 +172,19 @@ public class DatabaseTablesToObjects {
 
     // Ajouter un étudiant prépa
     public void addEtudiantPrepa(Connection connection, EtudiantPrepa etudiant) throws SQLException {
-        String query = "INSERT INTO ETUDIANTPREPA (NOM, PRENOM, CIN, AGE, NIVEAUEtude, filierePrepa, classement) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+        String query = "INSERT INTO `orientation`.`etudiantprepa` (NOM, PRENOM, CIN, AGE, NIVEAUEtude, filierePrepa, classement) VALUES (?, ?,?, ?, ?, ?, ?);";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, etudiant.getNom());
             stmt.setString(2, etudiant.getPrenom());
             stmt.setString(3, etudiant.getCIN());
-            stmt.setInt(4, etudiant.getAge());
+            stmt.setInt(4, etudiant.getAge()); // Check this value is passed correctly
             stmt.setString(5, etudiant.getNiveauEtude());
             stmt.setString(6, etudiant.getFilierePrepa());
             stmt.setInt(7, etudiant.getClassement());
             stmt.executeUpdate();
         }
     }
+
 
     // Ajouter un étudiant parallèle
     public void addEtudiantParallele(Connection connection, EtudiantParallele etudiant) throws SQLException {
@@ -318,6 +318,7 @@ public class DatabaseTablesToObjects {
                     etudiant = new EtudiantPrepa(nom, prenom, cin1, age, niveauEtude);
                     etudiant.setFilierePrepa(filierePrepa);
                     etudiant.setClassement(classement);
+                    etudiant.setAge(age);
                 }
             }
         }

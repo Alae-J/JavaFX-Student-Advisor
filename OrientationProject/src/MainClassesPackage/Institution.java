@@ -7,7 +7,7 @@ import java.util.List;
 import Exceptions.filiereExistantException;
 import Exceptions.matiereExistantException;
 
-public abstract class Institution implements Evaluate,Serializable {
+public class Institution implements Evaluate,Serializable {
 	String nom;
 	String ville;
 	String type ; //Ecole ou Universite 

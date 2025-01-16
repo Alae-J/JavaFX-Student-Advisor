@@ -1,13 +1,24 @@
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import BD.DatabaseTablesToObjects;
+import MainClassesPackage.Etudiant;
+import MainClassesPackage.Institution;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -15,14 +26,51 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class InstitutionsPage extends Application {
+	
+	Etudiant etudiant;
+	
+	
+	public InstitutionsPage(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	};
+	
 
     @Override
     public void start(Stage stage) {
+    	
+    	String url = "jdbc:mysql://localhost:3306/Orientation";
+        String user = "root"; // Remplacez par votre nom d'utilisateur
+        String password = "yassine124800"; // Remplacez par votre mot de passe
+
+        try {
+            // Charger le driver JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Établir la connexion
+            Connection connection = DriverManager.getConnection(url, user, password);
+            
+            
         // Main layout container
         VBox mainLayout = new VBox(20);
         mainLayout.setPadding(new Insets(30));
         mainLayout.setAlignment(Pos.CENTER);
+        
+        
+     // Barre d'informations de l'étudiant connecté (en haut à droite)
+        HBox userInfoBox = new HBox(15);
+        userInfoBox.setAlignment(Pos.TOP_RIGHT);
+        userInfoBox.setPadding(new Insets(10));
+        userInfoBox.setStyle("-fx-background-color: #333; -fx-padding: 10px;");
 
+        Label nameLabel = new Label("Nom: " + etudiant.getNom());
+        Label lastNameLabel = new Label("Prénom: " + etudiant.getPrenom());
+
+        nameLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        lastNameLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        userInfoBox.getChildren().addAll(nameLabel, lastNameLabel);
+
+        
         // Title for the page
         Text pageTitle = new Text("Institutions Permises");
         pageTitle.setFont(Font.font("Arial", 28));
@@ -31,28 +79,50 @@ public class InstitutionsPage extends Application {
         Text institutionListTitle = new Text("Liste des Institutions Permises");
         institutionListTitle.setFont(Font.font("Arial", 20));
 
-        // GridPane for institution list with details
-        GridPane institutionGrid = new GridPane();
-        institutionGrid.setAlignment(Pos.CENTER);
-        institutionGrid.setHgap(20);
-        institutionGrid.setVgap(10);
+        Text institutionsSectionTitle = new Text("Liste des Institutions");
+        institutionsSectionTitle.setFont(Font.font("Arial", 20)); // Matching size to other section titles
 
-        String[] institutions = {"INPT", "ENSIAS", "EMI", "EHTP UNIVERSITE HEHE ALAE IS THE BEST"};
-        for (int i = 0; i < institutions.length; i++) {
-            String institutionNameText = institutions[i]; // Final variable for lambda expressions
+        // List of institutions
+        ListView<String> institutionList = new ListView<>();
+        //cree une hashmap <nomInstitution,Institution>
+        
+        Map<String[], Institution> institutionMap = new HashMap<>();
 
-            Text institutionName = new Text(institutionNameText);
-            institutionName.setFont(Font.font("Arial", 16));
 
-            Button detailsButton = new Button("Détails");
-            detailsButton.setStyle("-fx-font-size: 14px; -fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 5px 15px;");
-            detailsButton.setOnMouseEntered(e -> detailsButton.setStyle("-fx-font-size: 14px; -fx-background-color: #1976D2; -fx-text-fill: white; -fx-padding: 5px 15px;"));
-            detailsButton.setOnMouseExited(e -> detailsButton.setStyle("-fx-font-size: 14px; -fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 5px 15px;"));
-            detailsButton.setOnAction(e -> System.out.println("Afficher les détails de: " + institutionNameText));
-
-            institutionGrid.add(institutionName, 0, i);
-            institutionGrid.add(detailsButton, 1, i);
+        DatabaseTablesToObjects dataBase = new DatabaseTablesToObjects();
+        
+        
+        List<Institution> institutions = dataBase.loadInstitutions(connection);
+        
+        List<Institution> institutionsPermises = this.etudiant.institutionPermises(institutions);
+        
+//        Comparator c = new CompareInstitution();
+//		Collections.sort(institutions,c);
+		
+        for (Institution institution : institutionsPermises) {
+            institutionList.getItems().add(institution.getNom() + " - " + institution.getVille());
+            String[] clef = { institution.getNom(), institution.getVille()};
+            institutionMap.put(clef, institution);
         }
+
+        institutionList.setPrefHeight(200);
+        institutionList.setPrefWidth(600);
+
+        // Institution detail pop-up
+        institutionList.setOnMouseClicked(event -> {
+            if (!institutionList.getSelectionModel().isEmpty()) {
+                String selectedInstitutionName = institutionList.getSelectionModel().getSelectedItem();
+                Institution selectedInstitution = institutionMap.get(selectedInstitutionName);
+
+                if (selectedInstitution != null) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Détails de l'Institution");
+                    alert.setHeaderText(selectedInstitution.getNom());
+                    alert.setContentText(selectedInstitution.toString());
+                    alert.showAndWait();
+                }
+            }
+        });
 
         // Buttons container for navigation
         HBox buttonsContainer = new HBox(20);
@@ -89,13 +159,19 @@ public class InstitutionsPage extends Application {
         buttonsContainer.getChildren().addAll(backButton, homeButton);
 
         // Add components to layout
-        mainLayout.getChildren().addAll(pageTitle, institutionListTitle, institutionGrid, buttonsContainer);
+        mainLayout.getChildren().addAll(userInfoBox, pageTitle, institutionListTitle, institutionList, buttonsContainer);
+
 
         // Create and set the scene
         Scene scene = new Scene(mainLayout, 850, 750);
         stage.setTitle("Institutions Permises");
         stage.setScene(scene);
         stage.show();
+        
+        connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

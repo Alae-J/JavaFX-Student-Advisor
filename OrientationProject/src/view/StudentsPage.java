@@ -30,7 +30,6 @@ import java.util.Set;
 public class StudentsPage extends Application {
 
     private Set<Etudiant> mockDatabase = new HashSet<>(); // Avoid duplicates
-    private List<Object[]> studentChanges = new ArrayList<>();
     DatabaseTablesToObjects DB = new DatabaseTablesToObjects(); // pour utiliser les fcts du classe DatabaseTablesToObjects
   
      
@@ -132,7 +131,23 @@ public class StudentsPage extends Application {
             Button deleteButton = new Button("Supprimer");
             deleteButton.setStyle("-fx-font-size: 14px; -fx-background-color: #F44336; -fx-text-fill: white;");
             deleteButton.setOnAction(e -> {
-                mockDatabase.remove(student);
+            	if(student instanceof EtudiantParallele ) {
+            		  try {
+						DB.deleteEtudiantParallele(connection,student.getCIN());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            	}
+            	if(student instanceof EtudiantPrepa) {
+                	try {
+						DB.deleteEtudiantPrepa(connection,student.getCIN());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            	}
+ 
                 try {
 					refreshStudentGrid(studentGrid, stage, connection);
 				} catch (SQLException e1) {
@@ -144,7 +159,7 @@ public class StudentsPage extends Application {
             Button connectButton = new Button("Se connecter en tant que");
             connectButton.setStyle("-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white;");
             connectButton.setOnAction(e -> {
-                InstitutionsPage institutionsPage = new InstitutionsPage(); 
+                InstitutionsPage institutionsPage = new InstitutionsPage(student); 
                 institutionsPage.start(stage); // Navigate to InstitutionsPage
             });
 
@@ -213,50 +228,68 @@ public class StudentsPage extends Application {
         classementField.setPromptText("Classement");
 
         Button submitButton = new Button("Ajouter");
-        submitButton.setOnAction(e -> {
-        	String nom = nomField.getText();
-            String prenom =prenomField.getText();
-            String CIN = cinField.getText();
-            int age = Integer.parseInt(ageField.getText());
-            String filiere = filiereComboBox.getValue();
-            int classement = Integer.parseInt(classementField.getText());
-        	
-            Object[] studentData = {
-                nomField.getText(),
-                prenomField.getText(),
-                cinField.getText(),
-                Integer.parseInt(ageField.getText()),
-                "Prépa",
-                filiereComboBox.getValue(),
-                Integer.parseInt(classementField.getText())
-            };
-            EtudiantPrepa E = new EtudiantPrepa(nom,prenom, CIN, age,"BAC+2");
-            E.setFilierePrepa(filiere);
-            E.setClassement(classement);
-            
-            try {
-				DB.addEtudiantPrepa(connection, E);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        
-            studentChanges.add(studentData); // Store student data
-            formStage.close();
-            try {
-				refreshStudentGrid(studentGrid, stage,connection);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        });
 
-        formLayout.getChildren().addAll(new Text("Ajouter Étudiant Prépa"), nomField, prenomField, cinField, ageField, filiereComboBox, classementField, submitButton);
+        Text errorText = new Text();
+        errorText.setStyle("-fx-fill: red;");
+
+        formLayout.getChildren().addAll(
+                new Text("Ajouter Étudiant Prépa"),
+                nomField, prenomField, cinField, ageField, filiereComboBox, classementField, errorText, submitButton
+        );
+
+        submitButton.setOnAction(e -> {
+            String nom = nomField.getText();
+            String prenom = prenomField.getText();
+            String CIN = cinField.getText();
+            int age;
+            String filiere = filiereComboBox.getValue();
+            int classement;
+
+            try {
+                // Valider l'âge
+                if (ageField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("L'âge est requis.");
+                }
+                age = Integer.parseInt(ageField.getText());
+                if (age <= 0) {
+                    throw new IllegalArgumentException("L'âge doit être un entier positif.");
+                }
+
+                // Valider le classement
+                if (classementField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Le classement est requis.");
+                }
+                classement = Integer.parseInt(classementField.getText());
+
+                // Vérifiez les autres champs (facultatif)
+                if (nom.isEmpty() || prenom.isEmpty() || CIN.isEmpty() || filiere == null) {
+                    throw new IllegalArgumentException("Tous les champs doivent être remplis.");
+                }
+
+                // Créer et ajouter l'étudiant
+                EtudiantPrepa E = new EtudiantPrepa(nom, prenom, CIN, age, "BAC+2");
+                E.setFilierePrepa(filiere);
+                E.setClassement(classement);
+
+                DB.addEtudiantPrepa(connection, E);
+                formStage.close();
+                refreshStudentGrid(studentGrid, stage, connection);
+
+            } catch (NumberFormatException ex) {
+                errorText.setText("L'âge et le classement doivent être des nombres valides.");
+            } catch (IllegalArgumentException ex) {
+                errorText.setText(ex.getMessage());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                errorText.setText("Erreur lors de l'ajout de l'étudiant.");
+            }
+        });
 
         Scene formScene = new Scene(formLayout, 400, 400);
         formStage.setScene(formScene);
         formStage.show();
     }
+
 
     
 	private void showEditStudentForm(Etudiant student, Stage stage, GridPane studentGrid, Connection connection) {
@@ -413,30 +446,23 @@ public class StudentsPage extends Application {
 
         Button submitButton = new Button("Ajouter");
         
+        formLayout.getChildren().addAll(
+                new Text("Ajouter Étudiant Parallèle"),
+                nomField, prenomField, cinField, ageField,
+                classementField, noteDiplomeField, filiereField,
+                note1Field, note2Field, note3Field, note4Field,
+                submitButton
+            );
         
         submitButton.setOnAction(e -> {
-            Object[] studentData = {
-                nomField.getText(),
-                prenomField.getText(),
-                cinField.getText(),
-                Integer.parseInt(ageField.getText()),
-                "Parallèle",
-                Integer.parseInt(classementField.getText()),
-                Float.parseFloat(noteDiplomeField.getText()),
-                filiereField.getText(),
-                Float.parseFloat(note1Field.getText()),
-                Float.parseFloat(note2Field.getText()),
-                Float.parseFloat(note3Field.getText()),
-                Float.parseFloat(note4Field.getText())
-                
-            };
+        
             String nom = nomField.getText();
             String prenom = prenomField.getText();
             String CIN = cinField.getText();
-            int age =  Integer.parseInt(ageField.getText());
+            int age =  Integer.parseInt(ageField.getText());  
             int classement = Integer.parseInt(classementField.getText());
             float noteDiplome = Float.parseFloat(noteDiplomeField.getText());
-            String filiereDansUniv = filiereField.getText();
+            String filiereDansUniv = filiereField.getText(); 
             float s1 = Float.parseFloat(note1Field.getText());
             float s2 =Float.parseFloat(note2Field.getText());
             float s3 =Float.parseFloat(note3Field.getText());
@@ -446,10 +472,11 @@ public class StudentsPage extends Application {
             
             
             EtudiantParallele E = new EtudiantParallele(nom, prenom, CIN, age, "BAC+2");
-            
+            E.setFiliereUniv(filiereDansUniv);
             E.setNoteDiplome(noteDiplome);
             E.setClassementDansUniversitee(classement);
             E.setNoteSemestre(notes);
+            E.setAge(age);
             
             try {
 				DB.addEtudiantParallele(connection, E);
@@ -458,7 +485,7 @@ public class StudentsPage extends Application {
 				e1.printStackTrace();
 			}
             
-            studentChanges.add(studentData); // Store student data
+
             formStage.close();
             try {
 				refreshStudentGrid(studentGrid, stage, connection);
@@ -467,14 +494,6 @@ public class StudentsPage extends Application {
 				e1.printStackTrace();
 			}
         });
-
-        formLayout.getChildren().addAll(
-            new Text("Ajouter Étudiant Parallèle"),
-            nomField, prenomField, cinField, ageField,
-            classementField, noteDiplomeField, filiereField,
-            note1Field, note2Field, note3Field, note4Field,
-            submitButton
-        );
 
         Scene formScene = new Scene(formLayout, 400, 600);
         formStage.setScene(formScene);

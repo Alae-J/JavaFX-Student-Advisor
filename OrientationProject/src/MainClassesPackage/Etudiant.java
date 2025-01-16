@@ -17,13 +17,6 @@ public abstract class Etudiant  {
 	static int count = 0 ;
 	
 	
-	public Etudiant (String nom, String prenom , String CIN , int age) {
-		this.nom = nom;
-		this.prenom = prenom;
-		this.CIN = CIN;
-		this.age = age;
-	}
-	
 	public Etudiant(String nom, String prenom,String CIN,int age,String niveauEtude) {
 		
 		this.nom = nom;
@@ -65,6 +58,9 @@ public abstract class Etudiant  {
 		}
 		return r;
 	}
+	
+	
+	public abstract List<Institution> institutionPermises(List<Institution> L);
 
 	public String getNom() {
 		return nom;
