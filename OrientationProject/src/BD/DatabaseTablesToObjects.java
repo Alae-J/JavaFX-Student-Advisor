@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseTablesToObjects {
-	
-        // URL et informations de connexion
 
     
 
@@ -119,5 +117,144 @@ public class DatabaseTablesToObjects {
         }
         return matieres;
     }
+
+    // Charger les étudiants prépa
+    public ArrayList<EtudiantPrepa> loadEtudiantPrepa(Connection connection) throws SQLException {
+        ArrayList<EtudiantPrepa> etudiants = new ArrayList<>();
+        String query = "SELECT * FROM ETUDIANTPREPA";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String nom = rs.getString("NOM");
+                String prenom = rs.getString("PRENOM");
+                String cin = rs.getString("CIN");
+                int age = rs.getInt("AGE");
+                String niveauEtude = rs.getString("NIVEAUEtude");
+                String filierePrepa = rs.getString("filierePrepa");
+                int classement = rs.getInt("classement");
+
+                EtudiantPrepa etudiant = new EtudiantPrepa(nom, prenom, cin,age, niveauEtude);
+                etudiant.setFilierePrepa(filierePrepa);
+                etudiant.setClassement(classement);
+                etudiants.add(etudiant);
+            }
+        }
+        return etudiants;
+    }
+
+    // Charger les étudiants parallèles
+    public ArrayList<EtudiantParallele> loadEtudiantParallel(Connection connection) throws SQLException {
+        ArrayList<EtudiantParallele> etudiants = new ArrayList<>();
+        String query = "SELECT * FROM ETUDIANPARALLELe";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String nom = rs.getString("NOM");
+                String prenom = rs.getString("PRENOM");
+                String cin = rs.getString("CIN");
+                int age = rs.getInt("AGE");
+                String niveauEtude = rs.getString("NIVEAUEtude");
+                int classementDansUniversitee = rs.getInt("classementDansUniversitee");
+                float noteDiplome = rs.getFloat("noteDiplome");
+                String filiereUniv = rs.getString("filiereUniv");
+
+                EtudiantParallele etudiant = new EtudiantParallele(nom, prenom, cin, age, niveauEtude);
+                etudiant.setClassementDansUniversitee(classementDansUniversitee);
+                etudiant.setNoteDiplome(noteDiplome);
+                etudiant.setFiliereUniv(filiereUniv);
+                etudiants.add(etudiant);
+            }
+        }
+        return etudiants;
+    }
+
+    // Ajouter un étudiant prépa
+    public void addEtudiantPrepa(Connection connection, EtudiantPrepa etudiant) throws SQLException {
+        String query = "INSERT INTO ETUDIANTPREPA (NOM, PRENOM, CIN, AGE, NIVEAUEtude, filierePrepa, classement) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, etudiant.getNom());
+            stmt.setString(2, etudiant.getPrenom());
+            stmt.setString(3, etudiant.getCIN());
+            stmt.setInt(4, etudiant.getAge());
+            stmt.setString(5, etudiant.getNiveauEtude());
+            stmt.setString(6, etudiant.getFilierePrepa());
+            stmt.setInt(7, etudiant.getClassement());
+            stmt.executeUpdate();
+        }
+    }
+
+    // Ajouter un étudiant parallèle
+    public void addEtudiantParallele(Connection connection, EtudiantParallele etudiant) throws SQLException {
+        String query = "INSERT INTO ETUDIANPARALLELe (NOM, PRENOM, CIN, AGE, NIVEAUEtude, classementDansUniversitee, noteDiplome, filiereUniv) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, etudiant.getNom());
+            stmt.setString(2, etudiant.getPrenom());
+            stmt.setString(3, etudiant.getCIN());
+            stmt.setInt(4, etudiant.getAge());
+            stmt.setString(5, etudiant.getNiveauEtude());
+            stmt.setInt(6, etudiant.getClassementDansUniversitee());
+            stmt.setFloat(7, etudiant.getNoteDiplome());
+            stmt.setString(8, etudiant.getFiliereUniv());
+            stmt.executeUpdate();
+        }
+    }
+
+    // Mettre à jour un étudiant prépa
+    public void updateEtudiantPrepa(Connection connection, String cin, EtudiantPrepa etudiant) throws SQLException {
+        String query = "UPDATE ETUDIANTPREPA SET NOM = ?, PRENOM = ?, AGE = ?, NIVEAUEtude = ?, filierePrepa = ?, classement = ? WHERE CIN = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, etudiant.getNom());
+            stmt.setString(2, etudiant.getPrenom());
+            stmt.setInt(3, etudiant.getAge());
+            stmt.setString(4, etudiant.getNiveauEtude());
+            stmt.setString(5, etudiant.getFilierePrepa());
+            stmt.setInt(6, etudiant.getClassement());
+            stmt.setString(7, cin);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Mettre à jour un étudiant parallèle
+    public void updateEtudiantParallele(Connection connection, String cin, EtudiantParallele etudiant) throws SQLException {
+        String query = "UPDATE ETUDIANPARALLELe SET NOM = ?, PRENOM = ?, AGE = ?, NIVEAUEtude = ?, classementDansUniversitee = ?, noteDiplome = ?, filiereUniv = ? WHERE CIN = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, etudiant.getNom());
+            stmt.setString(2, etudiant.getPrenom());
+            stmt.setInt(3, etudiant.getAge());
+            stmt.setString(4, etudiant.getNiveauEtude());
+            stmt.setInt(5, etudiant.getClassementDansUniversitee());
+            stmt.setFloat(6, etudiant.getNoteDiplome());
+            stmt.setString(7, etudiant.getFiliereUniv());
+            stmt.setString(8, cin);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Supprimer un étudiant prépa
+    public void deleteEtudiantPrepa(Connection connection, String cin) throws SQLException {
+        String query = "DELETE FROM ETUDIANTPREPA WHERE CIN = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, cin);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Supprimer un étudiant parallèle
+    public void deleteEtudiantParallele(Connection connection, String cin) throws SQLException {
+        String query = "DELETE FROM ETUDIANPARALLELe WHERE CIN = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, cin);
+            stmt.executeUpdate();
+        }
+    }
+
 }
 

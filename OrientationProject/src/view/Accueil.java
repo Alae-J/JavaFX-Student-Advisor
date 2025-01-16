@@ -75,6 +75,8 @@ public class Accueil extends Application {
 
         // List of institutions
         ListView<String> institutionList = new ListView<>();
+        //cree une hashmap <nomInstitution,Institution>
+        
         Map<String, Institution> institutionMap = new HashMap<>();
 
 
@@ -122,6 +124,10 @@ public class Accueil extends Application {
         stage.setTitle("Accueil");
         stage.setScene(scene);
         stage.show();
+        
+        
+        
+        
         connection.close();
     } catch (Exception e) {
         e.printStackTrace();
