@@ -459,7 +459,7 @@ public class StudentsPage extends Application {
             String nom = nomField.getText();
             String prenom = prenomField.getText();
             String CIN = cinField.getText();
-            int age =  Integer.parseInt(ageField.getText());  
+            int age =  (int) Float.parseFloat(ageField.getText());  
             int classement = Integer.parseInt(classementField.getText());
             float noteDiplome = Float.parseFloat(noteDiplomeField.getText());
             String filiereDansUniv = filiereField.getText(); 

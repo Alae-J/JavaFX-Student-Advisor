@@ -9,6 +9,8 @@ import java.util.Map;
 
 import BD.DatabaseTablesToObjects;
 import MainClassesPackage.Etudiant;
+import MainClassesPackage.EtudiantParallele;
+import MainClassesPackage.EtudiantPrepa;
 import MainClassesPackage.Institution;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -94,6 +96,14 @@ public class InstitutionsPage extends Application {
         
         List<Institution> institutions = dataBase.loadInstitutions(connection);
         
+        if(etudiant instanceof EtudiantParallele) {
+        	  List<Institution> institutionsPermises = ((EtudiantParallele)this.etudiant).institutionPermises(institutions);
+        	
+        }
+        else if(etudiant instanceof EtudiantPrepa) {
+      	  List<Institution> institutionsPermises = ((EtudiantPrepa)this.etudiant).institutionPermises(institutions);
+      	
+      }
         List<Institution> institutionsPermises = this.etudiant.institutionPermises(institutions);
         
 //        Comparator c = new CompareInstitution();
