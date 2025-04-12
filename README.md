@@ -1,95 +1,118 @@
-# 📚 Projet Orientation
+# 🎓 JavaFX Student Advisor
 
-## 📌 Description
-**Orientation** est une application Java permettant aux étudiants de trouver la meilleure institution selon leur profil académique et leurs critères d’admission.
-
----
-
-## ⚙️ Technologies Utilisées
-- **Langage** : Java
-- **Interface Graphique** : JavaFX
-- **Base de Données** : MySQL
-- **Outils** : GitHub
+A JavaFX desktop application that helps students find the most suitable institutions and majors based on their academic profile and admission criteria.
 
 ---
 
-## 🏠 Structure du Projet
-Le projet est organisé en plusieurs packages et fichiers :
+## 📌 Project Overview
 
-### 📂 **Packages et Fichiers Principaux**
-- **`MainClassesPackage`** → Contient les classes principales :
-  - `Institution.java`
-  - `Filiere.java`
-  - `Etudiant.java` (classe abstraite)
-  - `EtudiantPrepa.java`
-  - `EtudiantParallele.java`
-  - `Matiere.java`
-  
-- **`BD`** → Gestion des interactions avec MySQL :
-  - `DatabaseTablesToObjects.java`
-  - `DatabaseConnection1.java`
-  - `ObjectInOutFile.java`
-
-- **`view`** → Interface utilisateur JavaFX :
-  - `Accueil.java`
-  - `StudentsPage.java`
-  - `InstitutionsPage.java`
-  
-- **`tests`** → Vérification des fonctionnalités :
-  - `test.java` (chargement des données, tri, sauvegarde des objets)
+This was developed as part of an academic project to practice Java, JavaFX, and MySQL integration. The application allows students to browse institutions, explore available programs, and evaluate their eligibility based on personalized conditions.
 
 ---
 
-## 🛠️ Installation et Exécution
-### 📌 1. Prérequis
-- Java **JDK 11+**
+## ⚙️ Technologies Used
+
+- **Language:** Java  
+- **GUI Framework:** JavaFX  
+- **Database:** MySQL  
+- **Tools:** IntelliJ IDEA / Eclipse, MySQL Workbench, Git & GitHub
+
+---
+
+## 🗂️ Project Structure
+
+The codebase is organized into clear packages:
+
+### 🔹 `MainClassesPackage` – Core Models
+- `Institution.java`
+- `Filiere.java`
+- `Etudiant.java` *(abstract)*
+- `EtudiantPrepa.java`
+- `EtudiantParallele.java`
+- `Matiere.java`
+
+### 🔹 `BD` – Database Handling
+- `DatabaseConnection1.java`
+- `DatabaseTablesToObjects.java`
+- `ObjectInOutFile.java`
+
+### 🔹 `view` – JavaFX User Interface
+- `Accueil.java`
+- `StudentsPage.java`
+- `InstitutionsPage.java`
+
+### 🔹 `tests` – Testing Logic
+- `test.java` *(loads and saves data, sorts and filters results)*
+
+---
+
+## 💠 Getting Started
+
+### ✅ Prerequisites
+- Java JDK **11+**
 - MySQL **8.0+**
-- Un IDE comme **IntelliJ IDEA** ou **Eclipse**
-- MySQL Workbench (optionnel pour visualiser la base)
+- JavaFX SDK (included in modern IDEs like IntelliJ or Eclipse)
+- MySQL Workbench *(optional, for schema visualization)*
 
-### 📌 2. Exécution du Projet
-1. **Lancer le serveur MySQL**
-   ```sh
+### ▶️ Running the Project
+
+1. Start your MySQL server:
+   ```bash
    sudo systemctl start mysql
    ```
-2. **Exécuter l'application**
-   ```sh
+
+2. Compile and run from CLI:
+   ```bash
    javac MainClassesPackage/test.java
    java MainClassesPackage.test
    ```
-3. **Ou exécuter avec un IDE (Eclipse/IntelliJ)**
+
+3. Or run the project via your IDE (IntelliJ, Eclipse, etc.)
 
 ---
 
-## 🐂 Base de Données
-*(Ajoutez ici le lien vers votre schéma MCD si vous avez une image.)*
+## 🗃️ Database Overview
 
-### **📌 Tables Principales**
-| Table                  | Description |
-|------------------------|-------------|
-| `ETUDIANTPREPA`       | Étudiants des classes préparatoires |
-| `ETUDIANPARALLELE`    | Étudiants des parcours parallèles |
-| `INSTITUTION`         | Écoles et universités disponibles |
-| `FILIERE`             | Formations proposées |
-| `CONDITIONSDENTREES`  | Critères d’admission des filières |
-| `MATIERE`            | Matières enseignées |
+### Key Tables
 
----
-
-## 🔄 Fonctionnalités Clés
-✔ **Gestion des étudiants** (prépa et parallèle)  
-✔ **Consultation des institutions et filières**  
-✔ **Validation des conditions d’entrée**  
-✔ **Tri et recherche des filières par critères**  
-✔ **Sauvegarde et chargement des données**  
+| Table Name           | Description                          |
+|----------------------|--------------------------------------|
+| `ETUDIANTPREPA`      | Students from preparatory classes    |
+| `ETUDIANTPARALLELE`  | Students from parallel pathways      |
+| `INSTITUTION`        | Registered universities/schools      |
+| `FILIERE`            | Available academic programs          |
+| `CONDITIONSDENTREES` | Program admission requirements       |
+| `MATIERE`            | Subjects associated with programs    |
 
 ---
 
-## 📞 Contact et Contribution
-💡 **Vous souhaitez contribuer ?**
-- Forkez le projet 🍔
-- Créez une branche 🚀
-- Soumettez une pull request 🛠️
+## ✨ Key Features
 
-📧 **Contact** : [alaejahid8@gmail.com](mailto:alaejahid8@gmail.com)  
-🔗 **GitHub** : [Projet Orientation](https://github.com/iichrome/Java-Project.git)
+- 🧑‍🎓 Student profile management (Prepa & Parallel)  
+- 🏩 Institution and major browsing  
+- ✅ Admission condition validation  
+- 🔍 Program filtering and sorting  
+- 💾 Data saving and loading (file-based)
+
+---
+
+## 🤝 Contribution
+
+Contributions are welcome!
+
+1. Fork this repository  
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)  
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)  
+4. Push to the branch (`git push origin feature/AmazingFeature`)  
+5. Open a pull request
+
+---
+
+## 💌 Contact
+
+- Email: [alaejahid8@gmail.com](mailto:alaejahid8@gmail.com)  
+- GitHub: [Alae-J](https://github.com/Alae-J)
+
+---
+
+> This project was one of my early steps in full-stack Java development. While it may not be perfect, it represents hands-on experience with backend, frontend, and database integration — and that’s what matters most.
